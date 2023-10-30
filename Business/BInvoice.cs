@@ -26,5 +26,19 @@ namespace Business
 
             return invoices;
         }
+        public bool Insert(Invoice newInvoice)
+        {
+            DInvoice data = new DInvoice();
+
+            bool success = data.InsertInvocie(newInvoice);
+
+            return success;
+        }
+
+        public bool DeactivateInvoice(int invoiceId)
+        {
+            DInvoice data = new DInvoice();
+            return data.DeactivateInvoice(invoiceId);
+        }
     }
 }

@@ -3,15 +3,32 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:Lab07"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical" Margin="10">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Fecha de búsqueda:"/>
-                <DatePicker Name="DatePickerSearch" Margin="0 0 10 0" SelectedDateFormat="Short"/>
+                <xctk:DateTimePickerBase x:Name="DateTimePickerSearch"  Format="Custom" FormatString="dd/MM/yyyy HH:mm:ss"  Width="244"/>
                 <Button Content="Buscar" Click="SearchButton_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <Label Content="ID Cliente:"/>
+                <TextBox Name="CustomerIdTextBox" Width="100"/>
+                <Label Content="Fecha:"/>
+                <xctk:DateTimePickerBase x:Name="InsertDate" Format="Custom" FormatString="dd/MM/yyyy HH:mm:ss" Width="244"/>
+                <Label Content="Total:"/>
+                <TextBox Name="TotalTextBox" Width="100"/>
+                <Label Content="Activa:"/>
+                <CheckBox Name="ActiveCheckBox" IsChecked="True"/>
+                <Button Content="Insertar" Click="InsertButton_Click" Margin="20,0,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <Label Content="ID Factura a Eliminar:"/>
+                <TextBox Name="InvoiceIdToDeleteTextBox" Width="100"/>
+                <Button Content="Eliminar" Click="DeleteButton_Click" Margin="20,0,0,0"/>
             </StackPanel>
             <ListView Name="ListViewInvoices" Margin="10" Grid.Row="0">
                 <ListView.View>
@@ -21,7 +38,7 @@
                         <GridViewColumn Header="Fecha" DisplayMemberBinding="{Binding Date}" Width="150"/>
                         <GridViewColumn Header="Total" DisplayMemberBinding="{Binding Total}" Width="100"/>
                         <GridViewColumn Header="Activa" DisplayMemberBinding="{Binding Active}" Width="100"/>
-                    </GridView>
+                       </GridView>
                 </ListView.View>
             </ListView>
         </StackPanel>

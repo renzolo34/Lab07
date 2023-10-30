@@ -32,7 +32,7 @@ namespace Lab07
         {
             InitializeComponent();
             LoadInvoices();
-
+            
         }
         private void LoadInvoices()
         {
@@ -44,13 +44,68 @@ namespace Lab07
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
+            DateTime selectedDateTime = DateTimePickerSearch.Value ?? DateTime.MinValue;
 
-            DateTime searchDate = DatePickerSearch.SelectedDate ?? DateTime.MinValue;
-
-            List<Invoice> filteredInvoices = bInvoice.GetByDate(searchDate.Date);
+            List<Invoice> filteredInvoices = bInvoice.GetByDate(selectedDateTime);
 
             ListViewInvoices.ItemsSource = filteredInvoices;
         }
 
+        private void InsertButton_Click(object sender, RoutedEventArgs e)
+        {
+            int customerId = int.Parse(CustomerIdTextBox.Text);
+            DateTime date = InsertDate.Value ?? DateTime.Now;
+            decimal total = decimal.Parse(TotalTextBox.Text);
+            bool active = ActiveCheckBox.IsChecked ?? true; 
+
+            Invoice newInvoice = new Invoice
+            {
+                CustomerId = customerId,
+                Date = date,
+                Total = total,
+                Active = active
+            };
+
+            BInvoice bInvoice = new BInvoice();
+
+            bool insertionResult = bInvoice.Insert(newInvoice);
+
+            if (insertionResult)
+            {
+                CustomerIdTextBox.Clear();
+                InsertDate.Value = DateTime.Now;
+                TotalTextBox.Clear();
+                ActiveCheckBox.IsChecked = true;
+            }
+            else
+            {
+              
+            }
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (int.TryParse(InvoiceIdToDeleteTextBox.Text, out int invoiceId))
+            {
+                BInvoice bInvoice = new BInvoice();
+                bool deactivationResult = bInvoice.DeactivateInvoice(invoiceId);
+
+                if (deactivationResult)
+                {
+
+                }
+                else
+                {
+
+                }
+
+                InvoiceIdToDeleteTextBox.Clear();
+            }
+            else
+            {
+
+            }
+        }
     }
 }
